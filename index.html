@@ -74,14 +74,14 @@
         }
 
         async function getBotResponse(userMessage) {
-            const apiKey = 'YOUR_API_KEY';  // Replace with your OpenAI API key
+            const apiKey = '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';  // Replace with your OpenAI API key
             const apiUrl = 'https://api.openai.com/v1/chat/completions';
             const headers = {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${apiKey}`
             };
             const body = JSON.stringify({
-                model: 'gpt-4',
+                model: 'gpt-3.5',
                 messages: [{ role: 'user', content: userMessage }]
             });
 
