@@ -6,46 +6,97 @@
     <title>Chat with GPT</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        #chat-container {
+            width: 100%;
+            max-width: 600px;
+            background: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
         #chat-box {
-            border: 1px solid #ccc;
+            border-bottom: 1px solid #ddd;
             padding: 10px;
-            width: 500px;
-            height: 400px;
-            overflow-y: scroll;
-            margin-bottom: 10px;
+            height: 60vh;
+            overflow-y: auto;
+            background: #fafafa;
         }
         .message {
             margin: 10px 0;
+            padding: 10px;
+            border-radius: 4px;
+            max-width: 80%;
         }
         .message.user {
-            text-align: right;
-            color: blue;
+            align-self: flex-end;
+            background: #e0f7fa;
+            color: #00796b;
         }
         .message.bot {
-            text-align: left;
-            color: green;
-        }
-        #input-box {
-            width: calc(100% - 100px);
-            padding: 10px;
-            box-sizing: border-box;
+            align-self: flex-start;
+            background: #eeeeee;
+            color: #616161;
         }
         #controls {
             display: flex;
-            justify-content: space-between;
+            padding: 10px;
+            background: #fff;
+        }
+        #input-box {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        @media (max-width: 600px) {
+            #chat-box {
+                height: 50vh;
+            }
+            button {
+                padding: 10px;
+            }
+            #input-box {
+                margin-right: 5px;
+            }
         }
     </style>
 </head>
 <body>
     <h1>Chat with GPT</h1>
-    <div id="chat-box"></div>
-    <div id="controls">
-        <input type="text" id="input-box" placeholder="Type your message here..." />
-        <button onclick="sendMessage()">Send</button>
-        <button onclick="newChat()">New Chat</button>
+    <div id="chat-container">
+        <div id="chat-box"></div>
+        <div id="controls">
+            <input type="text" id="input-box" placeholder="Type your message here..." />
+            <button onclick="sendMessage()">Send</button>
+            <button onclick="newChat()">New Chat</button>
+        </div>
     </div>
 
     <script src="api-key.js"></script>
