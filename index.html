@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with GPT</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #chat-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 500px;
+            height: 400px;
+            overflow-y: scroll;
+            margin-bottom: 10px;
+        }
+        .message {
+            margin: 10px 0;
+        }
+        .message.user {
+            text-align: right;
+            color: blue;
+        }
+        .message.bot {
+            text-align: left;
+            color: green;
+        }
+        #input-box {
+            width: calc(100% - 100px);
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        #controls {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chat with GPT</h1>
+    <div id="chat-box"></div>
+    <div id="controls">
+        <input type="text" id="input-box" placeholder="Type your message here..." />
+        <button onclick="sendMessage()">Send</button>
+        <button onclick="newChat()">New Chat</button>
+    </div>
+
+    <script>
+        const chatBox = document.getElementById('chat-box');
+        const inputBox = document.getElementById('input-box');
+
+        async function sendMessage() {
+            const userMessage = inputBox.value;
+            if (!userMessage) return;
+
+            // Display the user's message
+            displayMessage(userMessage, 'user');
+            inputBox.value = '';
+
+            // Fetch the bot's response
+            const botResponse = await getBotResponse(userMessage);
+            displayMessage(botResponse, 'bot');
+        }
+
+        function displayMessage(message, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            messageDiv.textContent = message;
+            chatBox.appendChild(messageDiv);
+            chatBox.scrollTop = chatBox.scrollHeight; // Scroll to the bottom
+        }
+
+        async function getBotResponse(userMessage) {
+            const apiKey = 'YOUR_API_KEY';  // Replace with your OpenAI API key
+            const apiUrl = 'https://api.openai.com/v1/chat/completions';
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+            };
+            const body = JSON.stringify({
+                model: 'gpt-4',
+                messages: [{ role: 'user', content: userMessage }]
+            });
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: headers,
+                    body: body
+                });
+                const data = await response.json();
+                return data.choices[0].message.content;
+            } catch (error) {
+                console.error('Error:', error);
+                return 'Sorry, there was an error communicating with the server.';
+            }
+        }
+
+        function newChat() {
+            chatBox.innerHTML = '';  // Clear the chat box
+        }
+    </script>
+</body>
+</html>
